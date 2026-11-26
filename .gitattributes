@@ -1,0 +1,5 @@
+# Preserve original bytes of hash-linked V3 research evidence.
+/results/part5/development_selection.json -text
+/results/part5/development_selection_v3.json -text
+/results/part5/cv_fold_audit.csv -text
+/results/part5/final_test_lock.json -text
