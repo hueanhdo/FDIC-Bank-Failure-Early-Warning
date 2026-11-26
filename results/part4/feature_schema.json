@@ -1,0 +1,124 @@
+{
+  "feature_quarter_policy": "Always take source financial q-1 for target prediction quarter q; never backfill bank gaps",
+  "release_vintage_limit": "Without actual filing/publication timestamps and historical vintages, even one-quarter lag is not a formal real-time availability guarantee.",
+  "feature_definitions": {
+    "equity_to_assets": {
+      "formula": "EQ / ASSET",
+      "interpretation": "Capital adequacy (book equity ratio)"
+    },
+    "tier1_leverage_pct": {
+      "formula": "RBC1AAJ (as reported, percent)",
+      "interpretation": "Reported regulatory capital proxy"
+    },
+    "noncurrent_loans_to_loans": {
+      "formula": "NCLNLS / LNLSGR",
+      "interpretation": "Noncurrent gross loans share"
+    },
+    "pastdue90_nonaccrual_assets_to_assets": {
+      "formula": "(P9ASSET + NAASSET) / ASSET",
+      "interpretation": "Serious problem assets over assets; NOT solely an NPL ratio"
+    },
+    "net_chargeoffs_to_loans": {
+      "formula": "NTLNLS / LNLSGR",
+      "interpretation": "Net charge-offs / gross loans; original flow conventions retained"
+    },
+    "loan_loss_allowance_to_loans": {
+      "formula": "LNATRES / LNLSGR",
+      "interpretation": "Loss allowance relative to loans, NOT allowance/NPL coverage"
+    },
+    "real_estate_loans_to_loans": {
+      "formula": "LNRE / LNLSGR",
+      "interpretation": "Real-estate concentration"
+    },
+    "efficiency_proxy": {
+      "formula": "NONIX / (INTINC - EINTEXP + NONII)",
+      "interpretation": "Expense intensity; imperfect management-quality proxy"
+    },
+    "roa_pct": {
+      "formula": "ROA (as reported, percent)",
+      "interpretation": "Profitability"
+    },
+    "roe_pct": {
+      "formula": "ROE (as reported, percent)",
+      "interpretation": "Profitability"
+    },
+    "net_interest_margin_pct": {
+      "formula": "NIMY (as reported, percent)",
+      "interpretation": "Earnings on interest-bearing assets"
+    },
+    "brokered_deposits_to_deposits": {
+      "formula": "BRO / DEP",
+      "interpretation": "Funding dependence; BRO is brokered deposits"
+    },
+    "cash_to_assets": {
+      "formula": "CHBAL / ASSET",
+      "interpretation": "Balance-sheet liquidity proxy"
+    },
+    "loans_to_deposits": {
+      "formula": "LNLSGR / DEP",
+      "interpretation": "Funding liquidity / loan intensity"
+    }
+  },
+  "feature_columns_selected_from_training": [
+    "equity_to_assets",
+    "tier1_leverage_pct",
+    "noncurrent_loans_to_loans",
+    "pastdue90_nonaccrual_assets_to_assets",
+    "net_chargeoffs_to_loans",
+    "loan_loss_allowance_to_loans",
+    "real_estate_loans_to_loans",
+    "efficiency_proxy",
+    "roa_pct",
+    "roe_pct",
+    "net_interest_margin_pct",
+    "brokered_deposits_to_deposits",
+    "cash_to_assets",
+    "loans_to_deposits"
+  ],
+  "forbidden_columns": [
+    "ACTIVE",
+    "CHANGEC1",
+    "COST",
+    "ENDEFYMD",
+    "EXIT_TYPE",
+    "FAILDATE",
+    "FAILURE",
+    "FAILYR",
+    "QBFASSET",
+    "QBFDEP",
+    "RESTYPE",
+    "ambiguous_failure",
+    "competing_exit",
+    "end_date",
+    "event_status",
+    "event_type",
+    "failure_date",
+    "future_failure",
+    "label",
+    "target",
+    "y_fail_next4q"
+  ],
+  "model_input_columns": [
+    "equity_to_assets",
+    "tier1_leverage_pct",
+    "noncurrent_loans_to_loans",
+    "pastdue90_nonaccrual_assets_to_assets",
+    "net_chargeoffs_to_loans",
+    "loan_loss_allowance_to_loans",
+    "real_estate_loans_to_loans",
+    "efficiency_proxy",
+    "roa_pct",
+    "roe_pct",
+    "net_interest_margin_pct",
+    "brokered_deposits_to_deposits",
+    "cash_to_assets",
+    "loans_to_deposits"
+  ],
+  "never_model_input": [
+    "CERT",
+    "REPDTE",
+    "SOURCE_REPDTE",
+    "y_fail_next4q"
+  ],
+  "schema_source": "FDIC BankFind financial field dictionary and 33-field acquisition allowlist"
+}

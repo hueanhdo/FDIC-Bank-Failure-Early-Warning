@@ -1,0 +1,8 @@
+{
+  "state": "V3_HELDOUT_TEST_ATTEMPTED_LOCKED",
+  "created_utc": "2026-11-24T16:53:04.676931+00:00",
+  "model": "hist_gradient_boosting",
+  "threshold": 0.015019594386141859,
+  "v3_selection_sha256": "85a39a9edad32967050cc5434ed22dbb211d33578d70d007ca230047a7da5320",
+  "instructions": "Do not remove, overwrite, or retry without new explicit user authorization."
+}

@@ -1,0 +1,73 @@
+{
+  "status": "V3_DEVELOPMENT_RECALIBRATION_COMPLETE_TEST_UNTOUCHED",
+  "unit_of_policy": "(CERT, REPDTE) = one bank-quarter prediction",
+  "target_horizon": "Failure within next four calendar quarters after prediction quarter q",
+  "n_oof_bank_quarters": 724466,
+  "n_oof_positive_bank_quarters": 1791,
+  "n_unique_oof_banks": 17395,
+  "n_fold_ids": 3,
+  "costs": {
+    "source": "data_raw/fdic/failures.parquet",
+    "historical_cost_start": "1984-01-01",
+    "historical_cost_end": "2007-12-31",
+    "confirmed_failure_events_with_positive_cost": 2237,
+    "earliest_event": "1984-01-06",
+    "latest_event": "2007-10-04",
+    "c_fn_proxy_thousand_usd": 8639.222,
+    "false_alarm_fraction_of_c_fn": 0.01,
+    "c_fp_assumed_thousand_usd": 86.39222,
+    "false_alarm_cost_is_observed": false,
+    "warning": "FDIC COST is a retrospective, potentially revised resolution-loss estimate, not observed avoided loss from a warning. False-alarm costs are unobserved. Amounts are not inflation-adjusted."
+  },
+  "scenarios": [
+    {
+      "fraction": 0.005,
+      "threshold": 0.007530538582279017,
+      "tp": 1580,
+      "fp": 24698,
+      "fn": 211,
+      "tn": 697977,
+      "bank_quarters": 724466,
+      "proxy_loss_in_c_fn_units": 334.49,
+      "c_fn_proxy_thousand_usd": 8639.222,
+      "c_fp_assumed_thousand_usd": 43.19611,
+      "proxy_cost_thousand_usd": 2889733.36678,
+      "proxy_cost_per_1000_bank_quarters_thousand_usd": 3988.777067219165
+    },
+    {
+      "fraction": 0.01,
+      "threshold": 0.015019594386141859,
+      "tp": 1521,
+      "fp": 15007,
+      "fn": 270,
+      "tn": 707668,
+      "bank_quarters": 724466,
+      "proxy_loss_in_c_fn_units": 420.07,
+      "c_fn_proxy_thousand_usd": 8639.222,
+      "c_fp_assumed_thousand_usd": 86.39222,
+      "proxy_cost_thousand_usd": 3629077.98554,
+      "proxy_cost_per_1000_bank_quarters_thousand_usd": 5009.314426819202
+    },
+    {
+      "fraction": 0.05,
+      "threshold": 0.05848683924543856,
+      "tp": 1289,
+      "fp": 5176,
+      "fn": 502,
+      "tn": 717499,
+      "bank_quarters": 724466,
+      "proxy_loss_in_c_fn_units": 760.8,
+      "c_fn_proxy_thousand_usd": 8639.222,
+      "c_fp_assumed_thousand_usd": 431.9611,
+      "proxy_cost_thousand_usd": 6572720.097599999,
+      "proxy_cost_per_1000_bank_quarters_thousand_usd": 9072.503192144282
+    }
+  ],
+  "chosen_model": "hist_gradient_boosting",
+  "old_threshold": 0.015969999999999998,
+  "v3_threshold": 0.015019594386141859,
+  "not_event_level_loss": true,
+  "test_data_accessed": false,
+  "training_or_cv_rerun": false,
+  "limitations": "Bank-quarter cost proxy may count multiple 4Q-window misses before one actual failure; figures do not represent total FDIC losses. Bank-specific intervention cost and historical publication vintages unavailable."
+}

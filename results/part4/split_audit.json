@@ -1,0 +1,52 @@
+{
+  "train_dates": [
+    "19840331",
+    "20071231"
+  ],
+  "gap_dates": [
+    "20080331",
+    "20081231"
+  ],
+  "test_dates": [
+    "20090331",
+    "20250630"
+  ],
+  "one_quarter_financial_reporting_lag": true,
+  "four_quarter_outcome_horizon": true,
+  "test_minimum_distinct_positive_CERTs_required": 50,
+  "test_meets_minimum": true,
+  "training": {
+    "rows": 1155374,
+    "positive_bank_quarters": 8623,
+    "negative_bank_quarters": 1146751,
+    "distinct_banks": 22681,
+    "distinct_positive_bank_CERTs": 2284,
+    "first_quarter": "19840630",
+    "last_quarter": "20071231"
+  },
+  "test": {
+    "rows": 387518,
+    "positive_bank_quarters": 1779,
+    "negative_bank_quarters": 385739,
+    "distinct_banks": 8294,
+    "distinct_positive_bank_CERTs": 501,
+    "first_quarter": "20090331",
+    "last_quarter": "20250630"
+  },
+  "labelled_rows_before_lag_by_bucket": {
+    "train": 1178338,
+    "gap": 33070,
+    "test": 387663
+  },
+  "censored_y_rows_excluded_by_bucket": {
+    "train": 51303,
+    "gap": 933,
+    "test": 13780
+  },
+  "labelled_rows_without_observed_previous_quarter_by_bucket": {
+    "train": 22964,
+    "test": 145
+  },
+  "gap_is_never_modelled": true,
+  "note": "Distinct positive CERTs count banks with at least one positive held-out bank-quarter label; not positive rows."
+}

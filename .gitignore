@@ -1,0 +1,59 @@
+# Raw and processed datasets (never commit bank-level FDIC data)
+data_raw/
+data_processed/
+*.parquet
+*.joblib
+
+# Python virtual environments and caches
+.venv/
+.venv_spark/
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# Local secrets and environment variables
+.env
+.env.*
+*.pem
+*.key
+*credentials*
+*secret*
+
+# Temporary outputs, logs, and matplotlib cache
+*.log
+*.tmp
+reports/temp_benchmark_data/
+reports/.matplotlib_cache/
+
+# Explicitly excluded bank-level or superseded result CSVs/JSONs
+results/part2/reporting_gaps.csv
+results/part5/cost_threshold_audit.json
+results/part5/cost_threshold_sweep.csv
+
+# Archives, backups, internal prompts, course materials, and prep reviews
+*.zip
+*.tar.gz
+*.bak
+_archive_local/
+docs/
+references/
+github_prep_review/
+PART2_README.txt
+PART3_README.txt
+PART4_INTEGRATION_GUIDE.md
+FDIC_Part5_V3_Final_Test_Agent_Prompt.txt
+*.pdf
+*.docx
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

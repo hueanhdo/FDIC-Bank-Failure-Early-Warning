@@ -1,0 +1,15 @@
+feature,nonmissing_train,missing_train,missing_train_pct,included_after_train_only_coverage_check
+equity_to_assets,1152619,2755,0.2385,True
+tier1_leverage_pct,1155374,0,0.0,True
+noncurrent_loans_to_loans,1142362,13012,1.1262,True
+pastdue90_nonaccrual_assets_to_assets,1081942,73432,6.3557,True
+net_chargeoffs_to_loans,1070615,84759,7.3361,True
+loan_loss_allowance_to_loans,1142067,13307,1.1517,True
+real_estate_loans_to_loans,1144807,10567,0.9146,True
+efficiency_proxy,1148167,7207,0.6238,True
+roa_pct,1155374,0,0.0,True
+roe_pct,1143446,11928,1.0324,True
+net_interest_margin_pct,1155374,0,0.0,True
+brokered_deposits_to_deposits,1133314,22060,1.9093,True
+cash_to_assets,1155373,1,0.0001,True
+loans_to_deposits,1148303,7071,0.612,True

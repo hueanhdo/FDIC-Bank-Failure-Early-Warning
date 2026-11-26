@@ -1,0 +1,10 @@
+{
+  "python": "3.13.7",
+  "pandas": "3.1.1",
+  "polars": "2.1.0",
+  "pyarrow": "26.0.1",
+  "platform": "win32",
+  "benchmark_design": "3 interleaved pairs, fresh subprocess, read+transform+aggregate; no child process startup in timer",
+  "memory_measure": "sampled Python-process RSS at 10ms intervals; JVM memory excluded",
+  "created_utc": "2026-11-14T04:44:31.461540+00:00"
+}

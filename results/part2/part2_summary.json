@@ -1,0 +1,41 @@
+{
+  "quarters": 170,
+  "raw_rows": 1682616,
+  "panel_rows": 1682616,
+  "excluded_rows": 0,
+  "duplicate_cert_repdte": 0,
+  "reporting_gaps": 33,
+  "label_exclusions": {
+    "already_exited": 1131,
+    "ambiguous_failure": 70,
+    "competing_exit": 65259
+  },
+  "failure_event_audit": {
+    "all_transaction_rows": 4117,
+    "historical_rows_excluded_from_event_lookup": 858,
+    "historical_missing_cert_rows": 488,
+    "study_period_transaction_rows": 3259,
+    "study_period_assistance_rows": 411,
+    "study_period_failure_rows": 2848,
+    "ambiguous_failure_certs": [
+      "[REDACTED_CERT_1_PHASE2_PRIVACY]",
+      "[REDACTED_CERT_2_PHASE2_PRIVACY]",
+      "[REDACTED_CERT_3_PHASE2_PRIVACY]"
+    ],
+    "ambiguous_failure_cert_count": 3,
+    "confirmed_failure_certs": 2842
+  },
+  "labelled_rows": 1599071,
+  "positive_labels": 10848,
+  "events_by_outcome": {
+    "merger_candidate": 18838,
+    "right_censored": 4257,
+    "failure": 2840,
+    "other_exit": 1870,
+    "unresolved": 27,
+    "ambiguous_failure": 3
+  },
+  "label_end": "2025-06-30",
+  "note": "Merger codes/structural missingness are candidates pending FDIC dictionary review. Event data and labels are never predictors.",
+  "sanitization_note": "Phase 2 sanitization replaced the 3 integer CERT values in failure_event_audit.ambiguous_failure_certs with anonymized placeholders while preserving ambiguous_failure_cert_count=3 and all numerical results."
+}

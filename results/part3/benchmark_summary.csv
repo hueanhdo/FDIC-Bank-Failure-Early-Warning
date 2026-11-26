@@ -1,0 +1,3 @@
+engine,median_seconds,median_peak_python_rss_mib,median_incremental_python_rss_mib
+pandas,5.804353800020181,692.6015625,612.23046875
+polars,0.4983344000065699,502.609375,408.01171875

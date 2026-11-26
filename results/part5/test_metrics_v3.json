@@ -1,0 +1,39 @@
+{
+  "status": "V3_FINAL_TEST_COMPLETE_LOCKED_NO_REPEATS",
+  "model": "hist_gradient_boosting",
+  "threshold_frozen_from_development": 0.015019594386141859,
+  "threshold_method_version": "V3_BANK_QUARTER_ALIGNED",
+  "bank_quarter_metrics": {
+    "observations": 387518,
+    "positives": 1779,
+    "positive_prevalence": 0.004590754493984796,
+    "average_precision": 0.4748498334412312,
+    "roc_auc": 0.9797500772922703,
+    "precision": 0.15984251968503937,
+    "recall": 0.9128724002248454,
+    "f1": 0.2720495853924114,
+    "tn": 377203,
+    "fp": 8536,
+    "fn": 155,
+    "tp": 1624,
+    "threshold": 0.015019594386141859
+  },
+  "test_distinct_positive_CERTs": 501,
+  "bank_quarter_proxy_cost_thousand_usd": 2076523.39992,
+  "proxy_cost_per_1000_bank_quarters_thousand_usd": 5358.521152359374,
+  "costs_frozen_from_development": {
+    "source": "data_raw/fdic/failures.parquet",
+    "historical_cost_start": "1984-01-01",
+    "historical_cost_end": "2007-12-31",
+    "confirmed_failure_events_with_positive_cost": 2237,
+    "earliest_event": "1984-01-06",
+    "latest_event": "2007-10-04",
+    "c_fn_proxy_thousand_usd": 8639.222,
+    "false_alarm_fraction_of_c_fn": 0.01,
+    "c_fp_assumed_thousand_usd": 86.39222,
+    "false_alarm_cost_is_observed": false,
+    "warning": "FDIC COST is a retrospective, potentially revised resolution-loss estimate, not observed avoided loss from a warning. False-alarm costs are unobserved. Amounts are not inflation-adjusted."
+  },
+  "test_read_once_after_lock": true,
+  "warning": "Cost proxy applies per prediction quarter, not independent failure event; no claims of observed FDIC supervisory savings or equivalent 23Q/66Q bank-level exposure."
+}

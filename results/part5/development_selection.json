@@ -1,0 +1,51 @@
+{
+  "status": "DEVELOPMENT_LOCKED_TEST_UNTOUCHED",
+  "chosen_model": "hist_gradient_boosting",
+  "model_average_precision_per_fold_mean": {
+    "hist_gradient_boosting": 0.16082689290603816,
+    "logistic": 0.09625149985425364
+  },
+  "chosen_threshold": 0.015969999999999998,
+  "selection_metric": "mean fold-level average_precision_score (AP)",
+  "threshold_selection": "minimize development out-of-fold proxy loss per (validation fold, CERT) with max score, maximum one alarm per bank-fold; not an ex-ante bank-quarter decision metric",
+  "threshold_proxy_cost_thousand_usd": 658153.2111450001,
+  "costs": {
+    "fdic_cost_field": "COST",
+    "fdic_loss_unit": "thousands of USD, as reported (retrospective estimates)",
+    "historical_failures_used": 2332,
+    "earliest_failure_date": "1980-01-11",
+    "latest_failure_date": "2007-10-04",
+    "historical_failure_cutoff": "20071231",
+    "c_fn_proxy_thousand_usd": 8317.3665,
+    "false_alarm_fraction_of_c_fn": 0.01,
+    "c_fp_assumed_thousand_usd": 83.173665,
+    "false_alarm_cost_is_observed": false,
+    "warning": "COST is a retrospectively reported FDIC resolution-loss estimate, NOT observed missed-warning harm; false-alarm inspection cost is unavailable and is an explicit scenario assumption. No test events used."
+  },
+  "n_folds": 3,
+  "purge_quarters": 4,
+  "training_feature_names": [
+    "equity_to_assets",
+    "tier1_leverage_pct",
+    "noncurrent_loans_to_loans",
+    "pastdue90_nonaccrual_assets_to_assets",
+    "net_chargeoffs_to_loans",
+    "loan_loss_allowance_to_loans",
+    "real_estate_loans_to_loans",
+    "efficiency_proxy",
+    "roa_pct",
+    "roe_pct",
+    "net_interest_margin_pct",
+    "brokered_deposits_to_deposits",
+    "cash_to_assets",
+    "loans_to_deposits"
+  ],
+  "random_state": 42,
+  "test_file_access_during_development": false,
+  "test_used_for_model_or_threshold_selection": false,
+  "software_versions": {
+    "sklearn": "1.9.1",
+    "pandas": "3.1.1"
+  },
+  "notes": "No hyperparameter search. The one-time final test requires distinct authorized command and creates a lock before reading test data."
+}

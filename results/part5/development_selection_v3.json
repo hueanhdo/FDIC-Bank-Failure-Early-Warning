@@ -1,0 +1,58 @@
+{
+  "status": "V3_DEVELOPMENT_SELECTION_FROZEN_TEST_UNTOUCHED",
+  "chosen_model": "hist_gradient_boosting",
+  "model_average_precision_per_fold_mean": {
+    "hist_gradient_boosting": 0.16082689290603816,
+    "logistic": 0.09625149985425364
+  },
+  "chosen_threshold": 0.015019594386141859,
+  "selection_metric": "mean fold-level average_precision_score (AP)",
+  "threshold_selection": "Exact minimum of scenario-weighted FP/FN on each held-out development OOF BANK-QUARTER; no max-over-time grouping. Threshold learned using development only.",
+  "threshold_proxy_cost_thousand_usd": 3629077.98554,
+  "costs": {
+    "source": "data_raw/fdic/failures.parquet",
+    "historical_cost_start": "1984-01-01",
+    "historical_cost_end": "2007-12-31",
+    "confirmed_failure_events_with_positive_cost": 2237,
+    "earliest_event": "1984-01-06",
+    "latest_event": "2007-10-04",
+    "c_fn_proxy_thousand_usd": 8639.222,
+    "false_alarm_fraction_of_c_fn": 0.01,
+    "c_fp_assumed_thousand_usd": 86.39222,
+    "false_alarm_cost_is_observed": false,
+    "warning": "FDIC COST is a retrospective, potentially revised resolution-loss estimate, not observed avoided loss from a warning. False-alarm costs are unobserved. Amounts are not inflation-adjusted."
+  },
+  "n_folds": 3,
+  "purge_quarters": 4,
+  "training_feature_names": [
+    "equity_to_assets",
+    "tier1_leverage_pct",
+    "noncurrent_loans_to_loans",
+    "pastdue90_nonaccrual_assets_to_assets",
+    "net_chargeoffs_to_loans",
+    "loan_loss_allowance_to_loans",
+    "real_estate_loans_to_loans",
+    "efficiency_proxy",
+    "roa_pct",
+    "roe_pct",
+    "net_interest_margin_pct",
+    "brokered_deposits_to_deposits",
+    "cash_to_assets",
+    "loans_to_deposits"
+  ],
+  "random_state": 42,
+  "test_file_access_during_development": false,
+  "test_used_for_model_or_threshold_selection": false,
+  "software_versions": {
+    "sklearn": "1.9.1",
+    "pandas": "3.1.1"
+  },
+  "notes": "No hyperparameter search. The one-time final test requires distinct authorized command and creates a lock before reading test data.",
+  "threshold_method_version": "V3_BANK_QUARTER_ALIGNED",
+  "source_original_selection_sha256": "714dee6312d547395a819b8ede0b18092a95e94e080196eb08ee3403091afc54",
+  "source_oof_sha256": "13a6d6da469dfcacb1dc8e62376ad1359ba0102d927ee2be9d4afd1d3ae494fd",
+  "source_fold_audit_sha256": "a56e3ed9ae81ab37c20eb33c3a26e3162a73633348b7e3929e0782ec8ff5fd3c",
+  "test_data_accessed": false,
+  "final_test_approved": false,
+  "model_fits_repeated": false
+}

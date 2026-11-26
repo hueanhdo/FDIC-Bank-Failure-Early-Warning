@@ -1,0 +1,21 @@
+SORT BY [col("year"), col("state")]
+   WITH_COLUMNS:
+   [(col("positive_labels") / col("bank_quarters").cast(Int64)).alias("positive_label_rate")] 
+    AGGREGATE[maintain_order: false]
+      [len().alias("bank_quarters"), col("CERT").n_unique().alias("distinct_banks"), col("y_fail_next4q").sum().alias("positive_labels"), (col("DEP").len() - col("DEP").null_count()).alias("deposit_reported_rows"), col("ASSET").sum().alias("total_assets_usd000"), col("DEP").sum().alias("reported_deposits_usd000")] BY [col("year"), col("state")]
+      FROM
+      simple π 6/6 ["year", "state", "CERT", ... 3 other columns]
+         WITH_COLUMNS:
+         [col("REPDTE").str.slice([dyn int: 0, dyn int: 4]).strict_cast(Int32).alias("year"), col("STNAME").fill_null(["UNKNOWN"]).alias("state"), when(col("DEP").is_not_nan() | col("DEP").is_null()).then(col("DEP")).otherwise(null.cast(Float64))] 
+          INNER JOIN:
+          LEFT PLAN ON: [col("CERT"), col("REPDTE")]
+            Parquet SCAN [<PROJECT_ROOT>/data_processed/part2/panel/REPDTE=19840331.parquet, ... 169 other sources]
+            PROJECT 5/33 COLUMNS
+            SELECTION: ((col("ASSET").is_not_null() & (col("ASSET").is_not_nan() & (col("ASSET") > 0.0))) & col("REPDTE").is_between(["19840331", "20250630"]))
+            ESTIMATED ROWS: 1739616
+          RIGHT PLAN ON: [col("CERT"), col("REPDTE")]
+            Parquet SCAN [<PROJECT_ROOT>/data_processed/part2/labels/REPDTE=19840331.parquet, ... 169 other sources]
+            PROJECT */3 COLUMNS
+            SELECTION: (col("REPDTE").is_between(["19840331", "20250630"]) & col("y_fail_next4q").is_not_null())
+            ESTIMATED ROWS: 1681037
+          END INNER JOIN

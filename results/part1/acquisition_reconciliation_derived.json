@@ -1,0 +1,129 @@
+{
+  "derived_artifact_note": "Publication-safe derived artifact extracted in Phase 2 from reports/part1_evidence_summary.json. Retains the acquisition inventory and 10 live API anchor checks while omitting storage_benchmark_sample (superseded pre-fix benchmark; see reports/benchmark_summary.csv for authoritative storage benchmark).",
+  "source_file": "reports/part1_evidence_summary.json",
+  "source_sha256": "dd927bff4ad1c383d0a5e4301a02b6af3197c73c5b089f24946604e754da27ee",
+  "omitted_sections": [
+    "storage_benchmark_sample"
+  ],
+  "project": "BFT65B Final Examination - Bank Failure Early Warning",
+  "part": "Part 1 - Acquisition & Storage",
+  "timestamp": "2026-11-11T12:08:00+07:00",
+  "scope": {
+    "start_quarter": "19840331",
+    "end_quarter": "20260630",
+    "total_expected_quarters": 170
+  },
+  "data_inventory": {
+    "financials_panel": {
+      "total_quarters_on_disk": 170,
+      "missing_quarters": 0,
+      "total_rows": 1682616,
+      "total_columns": 33,
+      "distinct_institutions_cert": 24064,
+      "duplicate_cert_repdte": 0,
+      "total_storage_mb": 236.78
+    },
+    "failures_table": {
+      "rows": 4117,
+      "columns": 9,
+      "storage_kb": 201.66,
+      "period": "1934-2026"
+    },
+    "institutions_table": {
+      "rows": 27835,
+      "columns": 9,
+      "storage_kb": 836.44,
+      "active_banks": 4212,
+      "inactive_banks": 23623
+    },
+    "total_raw_storage_mb": 237.8
+  },
+  "verification_audit": {
+    "live_api_verified_anchors": [
+      {
+        "quarter": "19840331",
+        "period": "1984Q1",
+        "api_total": 17930,
+        "local_rows": 17930,
+        "match": true
+      },
+      {
+        "quarter": "19891231",
+        "period": "1989Q4",
+        "api_total": 16152,
+        "local_rows": 16152,
+        "match": true
+      },
+      {
+        "quarter": "19930630",
+        "period": "1993Q2",
+        "api_total": 13695,
+        "local_rows": 13695,
+        "match": true
+      },
+      {
+        "quarter": "20001231",
+        "period": "2000Q4",
+        "api_total": 10020,
+        "local_rows": 10020,
+        "match": true
+      },
+      {
+        "quarter": "20080930",
+        "period": "2008Q3",
+        "api_total": 8476,
+        "local_rows": 8476,
+        "match": true
+      },
+      {
+        "quarter": "20121231",
+        "period": "2012Q4",
+        "api_total": 7166,
+        "local_rows": 7166,
+        "match": true
+      },
+      {
+        "quarter": "20200630",
+        "period": "2020Q2",
+        "api_total": 5131,
+        "local_rows": 5131,
+        "match": true
+      },
+      {
+        "quarter": "20230331",
+        "period": "2023Q1",
+        "api_total": 4740,
+        "local_rows": 4740,
+        "match": true
+      },
+      {
+        "quarter": "20241231",
+        "period": "2024Q4",
+        "api_total": 4560,
+        "local_rows": 4560,
+        "match": true
+      },
+      {
+        "quarter": "20260630",
+        "period": "2026Q2",
+        "api_total": 4313,
+        "local_rows": 4313,
+        "match": true
+      },
+      {
+        "table": "failures",
+        "api_total": 4117,
+        "local_rows": 4117,
+        "match": true
+      },
+      {
+        "table": "institutions",
+        "api_total": 27835,
+        "local_rows": 27835,
+        "match": true
+      }
+    ],
+    "manifest_cross_check_quarters": 170,
+    "manifest_all_complete": true
+  }
+}

@@ -1,0 +1,68 @@
+== Parsed Logical Plan ==
+'Sort ['year ASC NULLS FIRST, 'state ASC NULLS FIRST], true
++- Project [year#38, state#39, bank_quarters#41L, distinct_banks#42L, positive_labels#43L, deposit_reported_rows#44L, total_assets_usd000#45, reported_deposits_usd000#46, positive_label_rate#61]
+   +- Project [year#38, state#39, bank_quarters#41L, distinct_banks#42L, positive_labels#43L, deposit_reported_rows#44L, total_assets_usd000#45, reported_deposits_usd000#46, (cast(positive_labels#43L as double) / cast(bank_quarters#41L as double)) AS positive_label_rate#61]
+      +- Aggregate [year#38, state#39], [year#38, state#39, count(CERT#30L) AS bank_quarters#41L, count(distinct CERT#30L) AS distinct_banks#42L, sum(cast(y_fail_next4q#36 as bigint)) AS positive_labels#43L, count(DEP#40) AS deposit_reported_rows#44L, sum(ASSET#18) AS total_assets_usd000#45, coalesce(sum(DEP#40), 0.0) AS reported_deposits_usd000#46]
+         +- Project [CERT#30L, REPDTE#4, STNAME#6, ASSET#18, CASE WHEN isnan(DEP#23) THEN cast(null as double) ELSE DEP#23 END AS DEP#40, y_fail_next4q#36, year#38, state#39]
+            +- Project [CERT#30L, REPDTE#4, STNAME#6, ASSET#18, DEP#23, y_fail_next4q#36, year#38, coalesce(STNAME#6, UNKNOWN) AS state#39]
+               +- Project [CERT#30L, REPDTE#4, STNAME#6, ASSET#18, DEP#23, y_fail_next4q#36, cast(substring(REPDTE#4, 1, 4) as int) AS year#38]
+                  +- Filter isnotnull(y_fail_next4q#36)
+                     +- Project [CERT#30L, REPDTE#4, STNAME#6, ASSET#18, DEP#23, y_fail_next4q#36]
+                        +- Join Inner, ((CERT#30L = CERT#34L) AND (REPDTE#4 = REPDTE#35))
+                           :- Filter (((((REPDTE#4 >= 19840331) AND (REPDTE#4 <= 20250630)) AND isnotnull(ASSET#18)) AND NOT isnan(ASSET#18)) AND (ASSET#18 > cast(0 as double)))
+                           :  +- Project [CERT#30L, REPDTE#4, STNAME#6, ASSET#18, DEP#23]
+                           :     +- Relation [EINTEXP#0,NIMY#1,ORE#2,LNATRES#3,REPDTE#4,ELNATR#5,STNAME#6,RBC1AAJ#7,INTINC#8,LNCI#9,SC#10,NTLNLS#11,NCLNLS#12,LNRE#13,LNLSNET#14,ROA#15,DEPDOM#16,ROE#17,ASSET#18,LNLSGR#19,NONIX#20,NETINC#21,EQ#22,DEP#23,NAASSET#24,... 8 more fields] parquet
+                           +- Filter ((REPDTE#35 >= 19840331) AND (REPDTE#35 <= 20250630))
+                              +- Project [CERT#34L, REPDTE#35, y_fail_next4q#36]
+                                 +- Relation [CERT#34L,REPDTE#35,y_fail_next4q#36] parquet
+
+== Analyzed Logical Plan ==
+year: int, state: string, bank_quarters: bigint, distinct_banks: bigint, positive_labels: bigint, deposit_reported_rows: bigint, total_assets_usd000: double, reported_deposits_usd000: double, positive_label_rate: double
+Sort [year#38 ASC NULLS FIRST, state#39 ASC NULLS FIRST], true
++- Project [year#38, state#39, bank_quarters#41L, distinct_banks#42L, positive_labels#43L, deposit_reported_rows#44L, total_assets_usd000#45, reported_deposits_usd000#46, positive_label_rate#61]
+   +- Project [year#38, state#39, bank_quarters#41L, distinct_banks#42L, positive_labels#43L, deposit_reported_rows#44L, total_assets_usd000#45, reported_deposits_usd000#46, (cast(positive_labels#43L as double) / cast(bank_quarters#41L as double)) AS positive_label_rate#61]
+      +- Aggregate [year#38, state#39], [year#38, state#39, count(CERT#30L) AS bank_quarters#41L, count(distinct CERT#30L) AS distinct_banks#42L, sum(cast(y_fail_next4q#36 as bigint)) AS positive_labels#43L, count(DEP#40) AS deposit_reported_rows#44L, sum(ASSET#18) AS total_assets_usd000#45, coalesce(sum(DEP#40), 0.0) AS reported_deposits_usd000#46]
+         +- Project [CERT#30L, REPDTE#4, STNAME#6, ASSET#18, CASE WHEN isnan(DEP#23) THEN cast(null as double) ELSE DEP#23 END AS DEP#40, y_fail_next4q#36, year#38, state#39]
+            +- Project [CERT#30L, REPDTE#4, STNAME#6, ASSET#18, DEP#23, y_fail_next4q#36, year#38, coalesce(STNAME#6, UNKNOWN) AS state#39]
+               +- Project [CERT#30L, REPDTE#4, STNAME#6, ASSET#18, DEP#23, y_fail_next4q#36, cast(substring(REPDTE#4, 1, 4) as int) AS year#38]
+                  +- Filter isnotnull(y_fail_next4q#36)
+                     +- Project [CERT#30L, REPDTE#4, STNAME#6, ASSET#18, DEP#23, y_fail_next4q#36]
+                        +- Join Inner, ((CERT#30L = CERT#34L) AND (REPDTE#4 = REPDTE#35))
+                           :- Filter (((((REPDTE#4 >= 19840331) AND (REPDTE#4 <= 20250630)) AND isnotnull(ASSET#18)) AND NOT isnan(ASSET#18)) AND (ASSET#18 > cast(0 as double)))
+                           :  +- Project [CERT#30L, REPDTE#4, STNAME#6, ASSET#18, DEP#23]
+                           :     +- Relation [EINTEXP#0,NIMY#1,ORE#2,LNATRES#3,REPDTE#4,ELNATR#5,STNAME#6,RBC1AAJ#7,INTINC#8,LNCI#9,SC#10,NTLNLS#11,NCLNLS#12,LNRE#13,LNLSNET#14,ROA#15,DEPDOM#16,ROE#17,ASSET#18,LNLSGR#19,NONIX#20,NETINC#21,EQ#22,DEP#23,NAASSET#24,... 8 more fields] parquet
+                           +- Filter ((REPDTE#35 >= 19840331) AND (REPDTE#35 <= 20250630))
+                              +- Project [CERT#34L, REPDTE#35, y_fail_next4q#36]
+                                 +- Relation [CERT#34L,REPDTE#35,y_fail_next4q#36] parquet
+
+== Optimized Logical Plan ==
+Sort [year#38 ASC NULLS FIRST, state#39 ASC NULLS FIRST], true
++- Project [year#38, state#39, bank_quarters#41L, distinct_banks#42L, positive_labels#43L, deposit_reported_rows#44L, total_assets_usd000#45, reported_deposits_usd000#46, (cast(positive_labels#43L as double) / cast(bank_quarters#41L as double)) AS positive_label_rate#61]
+   +- Aggregate [year#38, state#39], [year#38, state#39, count(CERT#30L) AS bank_quarters#41L, count(distinct CERT#30L) AS distinct_banks#42L, sum(cast(y_fail_next4q#36 as bigint)) AS positive_labels#43L, count(DEP#40) AS deposit_reported_rows#44L, sum(ASSET#18) AS total_assets_usd000#45, coalesce(sum(DEP#40), 0.0) AS reported_deposits_usd000#46]
+      +- Project [CERT#30L, ASSET#18, CASE WHEN isnan(DEP#23) THEN null ELSE DEP#23 END AS DEP#40, y_fail_next4q#36, cast(substring(REPDTE#4, 1, 4) as int) AS year#38, coalesce(STNAME#6, UNKNOWN) AS state#39]
+         +- Join Inner, ((CERT#30L = CERT#34L) AND (REPDTE#4 = REPDTE#35))
+            :- Project [CERT#30L, REPDTE#4, STNAME#6, ASSET#18, DEP#23]
+            :  +- Filter ((isnotnull(REPDTE#4) AND (((((REPDTE#4 >= 19840331) AND (REPDTE#4 <= 20250630)) AND isnotnull(ASSET#18)) AND NOT isnan(ASSET#18)) AND (ASSET#18 > 0.0))) AND isnotnull(CERT#30L))
+            :     +- Relation [EINTEXP#0,NIMY#1,ORE#2,LNATRES#3,REPDTE#4,ELNATR#5,STNAME#6,RBC1AAJ#7,INTINC#8,LNCI#9,SC#10,NTLNLS#11,NCLNLS#12,LNRE#13,LNLSNET#14,ROA#15,DEPDOM#16,ROE#17,ASSET#18,LNLSGR#19,NONIX#20,NETINC#21,EQ#22,DEP#23,NAASSET#24,... 8 more fields] parquet
+            +- Filter ((isnotnull(REPDTE#35) AND (((REPDTE#35 >= 19840331) AND (REPDTE#35 <= 20250630)) AND isnotnull(y_fail_next4q#36))) AND isnotnull(CERT#34L))
+               +- Relation [CERT#34L,REPDTE#35,y_fail_next4q#36] parquet
+
+== Physical Plan ==
+AdaptiveSparkPlan isFinalPlan=false
++- Sort [year#38 ASC NULLS FIRST, state#39 ASC NULLS FIRST], true, 0
+   +- Exchange rangepartitioning(year#38 ASC NULLS FIRST, state#39 ASC NULLS FIRST, 8), ENSURE_REQUIREMENTS, [plan_id=66]
+      +- Project [year#38, state#39, bank_quarters#41L, distinct_banks#42L, positive_labels#43L, deposit_reported_rows#44L, total_assets_usd000#45, reported_deposits_usd000#46, (cast(positive_labels#43L as double) / cast(bank_quarters#41L as double)) AS positive_label_rate#61]
+         +- HashAggregate(keys=[year#38, state#39], functions=[count(CERT#30L), sum(cast(y_fail_next4q#36 as bigint)), count(DEP#40), sum(ASSET#18), sum(DEP#40), count(distinct CERT#30L)], output=[year#38, state#39, bank_quarters#41L, distinct_banks#42L, positive_labels#43L, deposit_reported_rows#44L, total_assets_usd000#45, reported_deposits_usd000#46])
+            +- Exchange hashpartitioning(year#38, state#39, 8), ENSURE_REQUIREMENTS, [plan_id=62]
+               +- HashAggregate(keys=[year#38, state#39], functions=[merge_count(CERT#30L), merge_sum(cast(y_fail_next4q#36 as bigint)), merge_count(DEP#40), merge_sum(ASSET#18), merge_sum(DEP#40), partial_count(distinct CERT#30L)], output=[year#38, state#39, count#63L, sum#65L, count#67L, sum#69, sum#71, count#74L])
+                  +- HashAggregate(keys=[year#38, state#39, CERT#30L], functions=[merge_count(CERT#30L), merge_sum(cast(y_fail_next4q#36 as bigint)), merge_count(DEP#40), merge_sum(ASSET#18), merge_sum(DEP#40)], output=[year#38, state#39, CERT#30L, count#63L, sum#65L, count#67L, sum#69, sum#71])
+                     +- Exchange hashpartitioning(year#38, state#39, CERT#30L, 8), ENSURE_REQUIREMENTS, [plan_id=58]
+                        +- HashAggregate(keys=[year#38, state#39, CERT#30L], functions=[partial_count(CERT#30L), partial_sum(cast(y_fail_next4q#36 as bigint)), partial_count(DEP#40), partial_sum(ASSET#18), partial_sum(DEP#40)], output=[year#38, state#39, CERT#30L, count#63L, sum#65L, count#67L, sum#69, sum#71])
+                           +- Project [CERT#30L, ASSET#18, CASE WHEN isnan(DEP#23) THEN null ELSE DEP#23 END AS DEP#40, y_fail_next4q#36, cast(substring(REPDTE#4, 1, 4) as int) AS year#38, coalesce(STNAME#6, UNKNOWN) AS state#39]
+                              +- BroadcastHashJoin [CERT#30L, REPDTE#4], [CERT#34L, REPDTE#35], Inner, BuildRight, false
+                                 :- Filter ((((((isnotnull(REPDTE#4) AND (REPDTE#4 >= 19840331)) AND (REPDTE#4 <= 20250630)) AND isnotnull(ASSET#18)) AND NOT isnan(ASSET#18)) AND (ASSET#18 > 0.0)) AND isnotnull(CERT#30L))
+                                 :  +- FileScan parquet [REPDTE#4,STNAME#6,ASSET#18,DEP#23,CERT#30L] Batched: true, DataFilters: [isnotnull(REPDTE#4), (REPDTE#4 >= 19840331), (REPDTE#4 <= 20250630), isnotnull(ASSET#18), NOT is..., Format: Parquet, Location: InMemoryFileIndex(170 paths)[<PROJECT_ROOT>/data_processed..., PartitionFilters: [], PushedFilters: [IsNotNull(REPDTE), GreaterThanOrEqual(REPDTE,19840331), LessThanOrEqual(REPDTE,20250630), IsNotN..., ReadSchema: struct<REPDTE:string,STNAME:string,ASSET:double,DEP:double,CERT:bigint>
+                                 +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, bigint, false], input[1, string, false]),false), [plan_id=53]
+                                    +- Filter ((((isnotnull(REPDTE#35) AND (REPDTE#35 >= 19840331)) AND (REPDTE#35 <= 20250630)) AND isnotnull(y_fail_next4q#36)) AND isnotnull(CERT#34L))
+                                       +- FileScan parquet [CERT#34L,REPDTE#35,y_fail_next4q#36] Batched: true, DataFilters: [isnotnull(REPDTE#35), (REPDTE#35 >= 19840331), (REPDTE#35 <= 20250630), isnotnull(y_fail_next4q#..., Format: Parquet, Location: InMemoryFileIndex(170 paths)[<PROJECT_ROOT>/data_processed..., PartitionFilters: [], PushedFilters: [IsNotNull(REPDTE), GreaterThanOrEqual(REPDTE,19840331), LessThanOrEqual(REPDTE,20250630), IsNotN..., ReadSchema: struct<CERT:bigint,REPDTE:string,y_fail_next4q:tinyint>
+

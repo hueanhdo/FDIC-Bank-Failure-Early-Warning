@@ -1,0 +1,124 @@
+{
+  "audit_title": "Part 2 Multi-Event Reconciliation Verification (Aggregate Only)",
+  "audit_timestamp": "2026-11-25T22:03:00+07:00",
+  "data_source": {
+    "path": "data_raw/fdic/failures.parquet",
+    "sha256": "a3e18c370f53c029e83708944bb91daf08ae5f664175f0fdd1bc389698c05ab3",
+    "total_rows": 4117,
+    "historical_excluded_rows": 858,
+    "historical_missing_cert_rows": 488,
+    "historical_nonnull_cert_rows": 370,
+    "study_period_rows": 3259,
+    "post_asof_20260630_rows": 2
+  },
+  "study_period_definition": {
+    "source_module": "src/part2_panel.py",
+    "function": "make_events",
+    "study_start_inclusive": "1984-03-31",
+    "exclusion_rule": "FAILDATE < 1984-03-31 excluded from study-period event lookup; RESTYPE normalized via strip().upper() into FAILURE vs ASSISTANCE",
+    "note": "No upper date filter is applied when counting study-period transaction rows or conflicting FAILURE dates in make_events, though eventual_outcome applies as_of = 2026-06-30."
+  },
+  "study_period_records_inspected": {
+    "total_study_period_transaction_rows": 3259,
+    "study_period_failure_rows": 2848,
+    "study_period_assistance_rows": 411,
+    "distinct_study_period_certs": 3224
+  },
+  "grouping_and_counting_rules": {
+    "group_key": "CERT (normalized to int64 after excluding pre-study rows)",
+    "multiple_event_date_definition": "nunique(parsed FAILDATE) > 1 within CERT",
+    "same_date_multiple_transaction_certs": 0,
+    "pattern_categories": {
+      "assistance_and_failure_single_failure_date": "n_assist_rows > 0 AND n_fail_rows > 0 AND n_fail_dates == 1",
+      "assistance_only_multiple_dates": "n_assist_rows > 0 AND n_fail_rows == 0 AND n_dates > 1",
+      "conflicting_failure_dates_only": "n_fail_dates > 1 AND n_assist_rows == 0",
+      "conflicting_failure_dates_plus_assistance": "n_fail_dates > 1 AND n_assist_rows > 0"
+    }
+  },
+  "study_period_results": {
+    "distinct_certs_with_multiple_event_dates": 35,
+    "counts_by_category": {
+      "assistance_and_failure_single_failure_date": 31,
+      "assistance_only_multiple_dates": 1,
+      "conflicting_failure_dates_only": 3,
+      "conflicting_failure_dates_plus_assistance": 0
+    },
+    "transaction_count_check": {
+      "assistance_and_failure_single_failure_date": {
+        "certs": 31,
+        "rows_per_cert": 2,
+        "distinct_dates_per_cert": 2,
+        "failure_rows_per_cert": 1,
+        "assistance_rows_per_cert": 1
+      },
+      "assistance_only_multiple_dates": {
+        "certs": 1,
+        "rows_per_cert": 2,
+        "distinct_dates_per_cert": 2,
+        "failure_rows_per_cert": 0,
+        "assistance_rows_per_cert": 2
+      },
+      "conflicting_failure_dates_only": {
+        "certs": 3,
+        "rows_per_cert": 2,
+        "distinct_dates_per_cert": 2,
+        "failure_rows_per_cert": 2,
+        "assistance_rows_per_cert": 0
+      }
+    },
+    "mutually_exclusive_and_exhaustive": true,
+    "single_date_assistance_only_certs": 378
+  },
+  "full_history_comparison_1934_to_2026": {
+    "scope": "All rows in failures.parquet with non-missing CERT (n = 3,629 rows across 3,585 distinct CERTs; excludes 488 pre-study missing-CERT rows)",
+    "distinct_certs_with_multiple_event_dates": 44,
+    "same_date_multiple_transaction_certs": 0,
+    "counts_by_category": {
+      "assistance_and_failure_single_failure_date": 37,
+      "assistance_only_multiple_dates": 4,
+      "conflicting_failure_dates_only": 3,
+      "conflicting_failure_dates_plus_assistance": 0
+    },
+    "assistance_only_multiple_dates_all_have_exactly_two_rows": true,
+    "explanation_of_discrepancy": "The report's 44 / 37 / 4 / 3 breakdown was computed across all 3,629 non-null CERT rows in the full historical failures table (1934-2026), rather than restricting to Part 2's study period (FAILDATE >= 1984-03-31). Under Part 2's study-period cutoff, 9 multi-event CERTs drop out of the multi-date set (6 assistance+failure CERTs and 3 assistance-only CERTs have pre-1984-03-31 events), leaving 35 study-period multi-event-date CERTs (31 assistance+failure, 1 assistance-only, 3 conflicting failure dates). Changing the study start to 1984-01-01 or capping at 2026-06-30 leaves the study-period breakdown unchanged at 35 (31 / 1 / 3)."
+  },
+  "reconciliation_with_part2_summary": {
+    "part2_summary_path": "results/part2/part2_summary.json",
+    "study_period_transaction_rows_match": true,
+    "study_period_assistance_rows_reconciliation": "378 (single-date assistance-only) + 31 (assistance+failure) + 2 (1 assistance-only multi-date x 2 rows) = 411 == study_period_assistance_rows",
+    "study_period_failure_rows_reconciliation": "2842 (confirmed_failure_certs x 1 row) + 6 (3 ambiguous_failure_certs x 2 rows) = 2848 == study_period_failure_rows",
+    "ambiguous_failure_cert_count_match": true,
+    "ambiguous_failure_cert_count": 3,
+    "confirmed_failure_certs": 2842
+  },
+  "claim_verification_statuses": {
+    "44_distinct_certs_with_multiple_event_dates_in_study_period": {
+      "reported": 44,
+      "verified_study_period": 35,
+      "verified_full_history_nonnull_cert": 44,
+      "status": "MISMATCH",
+      "reason": "Report value 44 reflects full 1934-2026 non-null CERT history, not Part 2's study period (>= 1984-03-31), which has 35."
+    },
+    "37_certs_with_both_assistance_and_failure": {
+      "reported": 37,
+      "verified_study_period": 31,
+      "verified_full_history_nonnull_cert": 37,
+      "status": "MISMATCH",
+      "reason": "Study-period count is 31; 37 includes 6 CERTs with pre-1984-03-31 events."
+    },
+    "4_certs_with_only_assistance_events_and_multiple_dates": {
+      "reported": 4,
+      "verified_study_period": 1,
+      "verified_full_history_nonnull_cert": 4,
+      "status": "MISMATCH",
+      "reason": "Study-period count is 1 (with 2 ASSISTANCE records); 4 includes 3 CERTs with pre-1984-03-31 events (all 4 in full history have 2 ASSISTANCE records each)."
+    },
+    "3_certs_with_conflicting_failure_dates": {
+      "reported": 3,
+      "verified_study_period": 3,
+      "verified_full_history_nonnull_cert": 3,
+      "status": "PASS",
+      "reason": "Matches both Part 2 study-period count (ambiguous_failure_cert_count: 3) and full history; all 3 have 2 FAILURE rows on 2 distinct dates and 0 ASSISTANCE rows."
+    }
+  }
+}

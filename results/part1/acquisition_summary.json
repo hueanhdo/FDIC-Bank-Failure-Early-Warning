@@ -1,0 +1,57 @@
+{
+  "audit_timestamp": "2026-11-11T09:20:59.933797",
+  "date_range": {
+    "start": "19840331",
+    "end": "20260630",
+    "total_expected_quarters": 170
+  },
+  "completeness": {
+    "all_quarters_present": true,
+    "no_mismatched_rows": true,
+    "no_duplicates": true,
+    "status": "EXCELLENT_100_PERCENT"
+  },
+  "financials_panel": {
+    "total_quarters": 170,
+    "total_rows": 1682616,
+    "distinct_banks_cert": 24064,
+    "duplicate_cert_repdte": 0,
+    "columns_count": 33,
+    "total_size_mb": 236.78
+  },
+  "failures_table": {
+    "rows": 4117,
+    "columns": [
+      "QBFDEP",
+      "COST",
+      "QBFASSET",
+      "FAILDATE",
+      "CERT",
+      "CITYST",
+      "RESTYPE",
+      "FAILYR",
+      "NAME"
+    ],
+    "min_year": 1934,
+    "max_year": 2026,
+    "size_kb": 201.66
+  },
+  "institutions_table": {
+    "rows": 27835,
+    "columns": [
+      "ACTIVE",
+      "BKCLASS",
+      "CHANGEC1",
+      "STNAME",
+      "ENDEFYMD",
+      "CERT",
+      "ESTYMD",
+      "INSDATE",
+      "NAME"
+    ],
+    "active_banks": 4212,
+    "inactive_banks": 23623,
+    "size_kb": 836.44
+  },
+  "total_dataset_size_mb": 237.8
+}

@@ -1,0 +1,24 @@
+{
+  "pandas_vs_polars": {
+    "passed": true,
+    "groups": 2373,
+    "labelled_bank_quarters": 1599071,
+    "positive_labels": 10848,
+    "max_absolute_differences": {
+      "total_assets_usd000": 0.0,
+      "reported_deposits_usd000": 0.0,
+      "positive_label_rate": 0.0
+    }
+  },
+  "spark": {
+    "passed": true,
+    "groups": 2373,
+    "labelled_bank_quarters": 1599071,
+    "positive_labels": 10848,
+    "max_absolute_differences": {
+      "total_assets_usd000": 0.0,
+      "reported_deposits_usd000": 0.0,
+      "positive_label_rate": 9.974659986866641e-17
+    }
+  }
+}

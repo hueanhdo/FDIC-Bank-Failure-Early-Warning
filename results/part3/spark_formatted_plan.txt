@@ -1,0 +1,109 @@
+== Physical Plan ==
+AdaptiveSparkPlan (17)
++- Sort (16)
+   +- Exchange (15)
+      +- Project (14)
+         +- HashAggregate (13)
+            +- Exchange (12)
+               +- HashAggregate (11)
+                  +- HashAggregate (10)
+                     +- Exchange (9)
+                        +- HashAggregate (8)
+                           +- Project (7)
+                              +- BroadcastHashJoin Inner BuildRight (6)
+                                 :- Filter (2)
+                                 :  +- Scan parquet  (1)
+                                 +- BroadcastExchange (5)
+                                    +- Filter (4)
+                                       +- Scan parquet  (3)
+
+
+(1) Scan parquet 
+Output [5]: [REPDTE#4, STNAME#6, ASSET#18, DEP#23, CERT#30L]
+Batched: true
+Location: InMemoryFileIndex [<PROJECT_ROOT>/data_processed/part2/panel/REPDTE=19840331.parquet, ... 169 entries]
+PushedFilters: [IsNotNull(REPDTE), GreaterThanOrEqual(REPDTE,19840331), LessThanOrEqual(REPDTE,20250630), IsNotNull(ASSET), GreaterThan(ASSET,0.0), IsNotNull(CERT)]
+ReadSchema: struct<REPDTE:string,STNAME:string,ASSET:double,DEP:double,CERT:bigint>
+
+(2) Filter
+Input [5]: [REPDTE#4, STNAME#6, ASSET#18, DEP#23, CERT#30L]
+Condition : ((((((isnotnull(REPDTE#4) AND (REPDTE#4 >= 19840331)) AND (REPDTE#4 <= 20250630)) AND isnotnull(ASSET#18)) AND NOT isnan(ASSET#18)) AND (ASSET#18 > 0.0)) AND isnotnull(CERT#30L))
+
+(3) Scan parquet 
+Output [3]: [CERT#34L, REPDTE#35, y_fail_next4q#36]
+Batched: true
+Location: InMemoryFileIndex [<PROJECT_ROOT>/data_processed/part2/labels/REPDTE=19840331.parquet, ... 169 entries]
+PushedFilters: [IsNotNull(REPDTE), GreaterThanOrEqual(REPDTE,19840331), LessThanOrEqual(REPDTE,20250630), IsNotNull(y_fail_next4q), IsNotNull(CERT)]
+ReadSchema: struct<CERT:bigint,REPDTE:string,y_fail_next4q:tinyint>
+
+(4) Filter
+Input [3]: [CERT#34L, REPDTE#35, y_fail_next4q#36]
+Condition : ((((isnotnull(REPDTE#35) AND (REPDTE#35 >= 19840331)) AND (REPDTE#35 <= 20250630)) AND isnotnull(y_fail_next4q#36)) AND isnotnull(CERT#34L))
+
+(5) BroadcastExchange
+Input [3]: [CERT#34L, REPDTE#35, y_fail_next4q#36]
+Arguments: HashedRelationBroadcastMode(List(input[0, bigint, false], input[1, string, false]),false), [plan_id=53]
+
+(6) BroadcastHashJoin
+Left keys [2]: [CERT#30L, REPDTE#4]
+Right keys [2]: [CERT#34L, REPDTE#35]
+Join type: Inner
+Join condition: None
+
+(7) Project
+Output [6]: [CERT#30L, ASSET#18, CASE WHEN isnan(DEP#23) THEN null ELSE DEP#23 END AS DEP#40, y_fail_next4q#36, cast(substring(REPDTE#4, 1, 4) as int) AS year#38, coalesce(STNAME#6, UNKNOWN) AS state#39]
+Input [8]: [REPDTE#4, STNAME#6, ASSET#18, DEP#23, CERT#30L, CERT#34L, REPDTE#35, y_fail_next4q#36]
+
+(8) HashAggregate
+Input [6]: [CERT#30L, ASSET#18, DEP#40, y_fail_next4q#36, year#38, state#39]
+Keys [3]: [year#38, state#39, CERT#30L]
+Functions [5]: [partial_count(CERT#30L), partial_sum(cast(y_fail_next4q#36 as bigint)), partial_count(DEP#40), partial_sum(ASSET#18), partial_sum(DEP#40)]
+Aggregate Attributes [5]: [count(CERT#30L)#55L, sum(cast(y_fail_next4q#36 as bigint))#57L, count(DEP#40)#58L, sum(ASSET#18)#59, sum(DEP#40)#60]
+Results [8]: [year#38, state#39, CERT#30L, count#63L, sum#65L, count#67L, sum#69, sum#71]
+
+(9) Exchange
+Input [8]: [year#38, state#39, CERT#30L, count#63L, sum#65L, count#67L, sum#69, sum#71]
+Arguments: hashpartitioning(year#38, state#39, CERT#30L, 8), ENSURE_REQUIREMENTS, [plan_id=58]
+
+(10) HashAggregate
+Input [8]: [year#38, state#39, CERT#30L, count#63L, sum#65L, count#67L, sum#69, sum#71]
+Keys [3]: [year#38, state#39, CERT#30L]
+Functions [5]: [merge_count(CERT#30L), merge_sum(cast(y_fail_next4q#36 as bigint)), merge_count(DEP#40), merge_sum(ASSET#18), merge_sum(DEP#40)]
+Aggregate Attributes [5]: [count(CERT#30L)#55L, sum(cast(y_fail_next4q#36 as bigint))#57L, count(DEP#40)#58L, sum(ASSET#18)#59, sum(DEP#40)#60]
+Results [8]: [year#38, state#39, CERT#30L, count#63L, sum#65L, count#67L, sum#69, sum#71]
+
+(11) HashAggregate
+Input [8]: [year#38, state#39, CERT#30L, count#63L, sum#65L, count#67L, sum#69, sum#71]
+Keys [2]: [year#38, state#39]
+Functions [6]: [merge_count(CERT#30L), merge_sum(cast(y_fail_next4q#36 as bigint)), merge_count(DEP#40), merge_sum(ASSET#18), merge_sum(DEP#40), partial_count(distinct CERT#30L)]
+Aggregate Attributes [6]: [count(CERT#30L)#55L, sum(cast(y_fail_next4q#36 as bigint))#57L, count(DEP#40)#58L, sum(ASSET#18)#59, sum(DEP#40)#60, count(CERT#30L)#56L]
+Results [8]: [year#38, state#39, count#63L, sum#65L, count#67L, sum#69, sum#71, count#74L]
+
+(12) Exchange
+Input [8]: [year#38, state#39, count#63L, sum#65L, count#67L, sum#69, sum#71, count#74L]
+Arguments: hashpartitioning(year#38, state#39, 8), ENSURE_REQUIREMENTS, [plan_id=62]
+
+(13) HashAggregate
+Input [8]: [year#38, state#39, count#63L, sum#65L, count#67L, sum#69, sum#71, count#74L]
+Keys [2]: [year#38, state#39]
+Functions [6]: [count(CERT#30L), sum(cast(y_fail_next4q#36 as bigint)), count(DEP#40), sum(ASSET#18), sum(DEP#40), count(distinct CERT#30L)]
+Aggregate Attributes [6]: [count(CERT#30L)#55L, sum(cast(y_fail_next4q#36 as bigint))#57L, count(DEP#40)#58L, sum(ASSET#18)#59, sum(DEP#40)#60, count(CERT#30L)#56L]
+Results [8]: [year#38, state#39, count(CERT#30L)#55L AS bank_quarters#41L, count(CERT#30L)#56L AS distinct_banks#42L, sum(cast(y_fail_next4q#36 as bigint))#57L AS positive_labels#43L, count(DEP#40)#58L AS deposit_reported_rows#44L, sum(ASSET#18)#59 AS total_assets_usd000#45, coalesce(sum(DEP#40)#60, 0.0) AS reported_deposits_usd000#46]
+
+(14) Project
+Output [9]: [year#38, state#39, bank_quarters#41L, distinct_banks#42L, positive_labels#43L, deposit_reported_rows#44L, total_assets_usd000#45, reported_deposits_usd000#46, (cast(positive_labels#43L as double) / cast(bank_quarters#41L as double)) AS positive_label_rate#61]
+Input [8]: [year#38, state#39, bank_quarters#41L, distinct_banks#42L, positive_labels#43L, deposit_reported_rows#44L, total_assets_usd000#45, reported_deposits_usd000#46]
+
+(15) Exchange
+Input [9]: [year#38, state#39, bank_quarters#41L, distinct_banks#42L, positive_labels#43L, deposit_reported_rows#44L, total_assets_usd000#45, reported_deposits_usd000#46, positive_label_rate#61]
+Arguments: rangepartitioning(year#38 ASC NULLS FIRST, state#39 ASC NULLS FIRST, 8), ENSURE_REQUIREMENTS, [plan_id=66]
+
+(16) Sort
+Input [9]: [year#38, state#39, bank_quarters#41L, distinct_banks#42L, positive_labels#43L, deposit_reported_rows#44L, total_assets_usd000#45, reported_deposits_usd000#46, positive_label_rate#61]
+Arguments: [year#38 ASC NULLS FIRST, state#39 ASC NULLS FIRST], true, 0
+
+(17) AdaptiveSparkPlan
+Output [9]: [year#38, state#39, bank_quarters#41L, distinct_banks#42L, positive_labels#43L, deposit_reported_rows#44L, total_assets_usd000#45, reported_deposits_usd000#46, positive_label_rate#61]
+Arguments: isFinalPlan=false
+
+

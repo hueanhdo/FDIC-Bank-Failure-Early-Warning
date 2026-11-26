@@ -1,0 +1,13 @@
+# Separate Spark environment dependencies for:
+#   - python -m src.part3_processing --spark ...
+#   - python -m src.part5_spark_demo --root ...
+#
+# Verified against the workspace .venv_spark package metadata.
+# External runtime prerequisite: a PySpark-compatible Java Development Kit (JDK)
+# on PATH / JAVA_HOME (exact original host JDK build was not logged in saved JSON telemetry).
+
+pyspark==4.1.4
+py4j==0.10.9.9
+pandas==2.2.3
+pyarrow==26.0.1
+numpy==2.5.4

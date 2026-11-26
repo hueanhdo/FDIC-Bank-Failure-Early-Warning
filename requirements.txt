@@ -1,0 +1,19 @@
+# Core Python dependencies for FDIC Bank Failure Early-Warning Pipeline (Parts 1-5)
+# Verified against saved experiment telemetry (benchmark_environment.json,
+# results/part3/environment.json, results/part4/pipeline_audit.json,
+# results/part5/development_selection_v3.json) and the workspace .venv.
+# Recorded interpreter: Python 3.13.7 (win32 / Windows 11).
+#
+# Install PySpark dependencies separately using requirements-spark.txt because
+# the isolated Spark environment uses pandas==2.2.3 alongside PySpark 4.1.4.
+
+requests==2.34.2
+pandas==3.1.1
+numpy==2.5.4
+pyarrow==26.0.1
+polars==2.1.0
+scikit-learn==1.9.1
+joblib==1.6.0
+psutil==7.2.2
+matplotlib==3.11.2
+pytest==9.2.0

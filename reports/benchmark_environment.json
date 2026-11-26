@@ -1,0 +1,35 @@
+{
+  "benchmark_timestamp": "2026-11-11T19:40:41.128162",
+  "benchmark_scope": "Single-machine consolidated one-year sample (2023 Call Report cohort)",
+  "disclaimer": "This benchmark measures single-machine format efficiency under identical rows/cols. It is NOT a direct benchmark of Hive partition pruning or the full 170-quarter panel.",
+  "methodology": "Balanced alternating execution order (AB/BA design over 5 rounds) with data-equivalence checks",
+  "sample": {
+    "period": "2023Q1-2023Q4",
+    "quarters": [
+      "20230331",
+      "20230630",
+      "20230930",
+      "20231231"
+    ],
+    "rows": 18798,
+    "columns": 33,
+    "selected_columns": [
+      "CERT",
+      "REPDTE",
+      "ASSET",
+      "DEP",
+      "ROA"
+    ]
+  },
+  "system_environment": {
+    "os": "Windows-11-10.0.26300-SP0",
+    "processor": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel",
+    "logical_cores": 4,
+    "python_version": "3.13.7",
+    "pandas_version": "3.1.1",
+    "pyarrow_version": "26.0.1",
+    "matplotlib_version": "3.11.2"
+  },
+  "rounds": 5,
+  "data_equivalence_verified": true
+}

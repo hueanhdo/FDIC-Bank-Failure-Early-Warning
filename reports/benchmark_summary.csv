@@ -1,0 +1,5 @@
+Metric,CSV (Median),CSV (Mean ± Std),Parquet Snappy (Median),Parquet Snappy (Mean ± Std),Empirical Advantage
+File Size (MB),4.4828,4.4828 ± 0.0000,2.8138,2.8138 ± 0.0000,37.2% space saved
+Write Time (s),0.3582,0.4101 ± 0.1156,0.0744,0.0785 ± 0.0156,4.82x faster
+Full Read Time (s),0.0579,0.0544 ± 0.0085,0.0195,0.0241 ± 0.0093,2.97x faster
+5-Column Read Time (s),0.02,0.0223 ± 0.0043,0.0045,0.0047 ± 0.0003,4.43x faster
